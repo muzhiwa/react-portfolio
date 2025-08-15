@@ -1,0 +1,105 @@
+/* src/styles/About.css */
+h2 {
+  margin-top: 20px;
+}
+.about-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.about-content {
+  display: flex;
+  gap: 60px;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.hobbies-section {
+  flex: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.05),
+    rgba(99, 102, 241, 0.05)
+  );
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.app.dark .hobbies-section {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.hobbies-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #6366f1;
+}
+
+.hobbies {
+  list-style: none;
+}
+
+.hobbies li {
+  margin-bottom: 15px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.3s;
+  font-weight: 500;
+}
+
+.app.dark .hobbies li {
+  background: rgba(31, 41, 55, 0.5);
+}
+
+.hobbies li:hover {
+  transform: translateX(10px);
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.app.dark .hobbies li:hover {
+  background: rgba(31, 41, 55, 0.8);
+}
+
+.toggle-btn {
+  margin-top: 30px;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.toggle-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(139, 92, 246, 0.5);
+}
+
+@media (max-width: 992px) {
+  .about-content {
+    flex-direction: column;
+  }
+
+  .hobbies-section {
+    margin-top: 40px;
+  }
+}

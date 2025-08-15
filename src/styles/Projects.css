@@ -1,0 +1,37 @@
+/* src/styles/Projects.css */
+.projects-section {
+  background: linear-gradient(to bottom, #f9fafb 50%, #f0f2f5 50%);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.app.dark .projects-section {
+  background: linear-gradient(to bottom, #111827 50%, #0f172a 50%);
+}
+
+.projects-container {
+  padding: 80px 0;
+}
+
+.projects-intro {
+  margin-bottom: 50px;
+  max-width: 700px;
+  font-size: 1.1rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-container {
+    padding: 60px 0;
+  }
+}
