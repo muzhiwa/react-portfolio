@@ -1,4 +1,4 @@
-// src/components/Projects.jsx
+
 import React from "react";
 import ProjectCard from "./ProjectCard";
 import "../styles/Projects.css";

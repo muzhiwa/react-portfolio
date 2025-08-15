@@ -1,4 +1,4 @@
-// src/components/About.jsx
+
 import React from "react";
 import "../styles/About.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
