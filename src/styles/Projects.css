@@ -1,4 +1,3 @@
-
 .projects-section {
   background: linear-gradient(to bottom, #f9fafb 50%, #f0f2f5 50%);
   max-width: 1200px;
@@ -24,6 +23,32 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 30px;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: #eee;
+}
+
+.filter-btn.active {
+  background: #6c63ff;
+  color: white;
+  border-color: #6c63ff;
 }
 
 @media (max-width: 768px) {
