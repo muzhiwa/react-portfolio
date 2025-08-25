@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import "../styles/Projects.css";
 
@@ -28,10 +27,10 @@ const Projects = () => {
       id: 3,
       name: "Weather Forecast App",
       description: "Location-based weather application with 7-day forecasts",
-      techStack: ["CSS", "OpenWeather API", "JavaScript", "HTML", "Boostrap"],
+      techStack: ["CSS", "OpenWeather API", "JavaScript", "HTML", "Bootstrap"],
       featured: true,
-      githubUrl: "https://chic-peony-f9eeac.netlify.app/",
-      liveUrl: "https://github.com/muzhiwa/my-weather-app",
+      githubUrl: "https://github.com/muzhiwa/my-weather-app",
+      liveUrl: "https://chic-peony-f9eeac.netlify.app/",
     },
     {
       id: 4,
@@ -64,6 +63,20 @@ const Projects = () => {
     },
   ];
 
+  // collect all unique skills
+  const allSkills = [
+    "All",
+    ...new Set(projects.flatMap((project) => project.techStack)),
+  ];
+
+  const [selectedSkill, setSelectedSkill] = useState("All");
+
+  // filter projects
+  const filteredProjects =
+    selectedSkill === "All"
+      ? projects
+      : projects.filter((p) => p.techStack.includes(selectedSkill));
+
   return (
     <section id="projects" className="projects-section">
       <div className="projects-container">
@@ -73,10 +86,29 @@ const Projects = () => {
           clean design and efficient code.
         </p>
 
-        <div className="projects-grid">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        {/* 🔎 Filter Buttons */}
+        <div className="filter-buttons">
+          {allSkills.map((skill) => (
+            <button
+              key={skill}
+              className={`filter-btn ${
+                selectedSkill === skill ? "active" : ""
+              }`}
+              onClick={() => setSelectedSkill(skill)}
+            >
+              {skill}
+            </button>
           ))}
+        </div>
+
+        <div className="projects-grid">
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))
+          ) : (
+            <p>No projects found for {selectedSkill}</p>
+          )}
         </div>
       </div>
     </section>
