@@ -226,7 +226,7 @@
 /* Emoji Reactions */
 .emoji-reactions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid #e5e7eb;
@@ -239,21 +239,40 @@
 .emoji-btn {
   background: #f3f4f6;
   border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  border-radius: 20px;
+  padding: 6px 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .dark .emoji-btn {
   background: #374151;
+  color: white;
 }
 
 .emoji-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.05);
   background: var(--primary);
+  color: white;
+}
+
+.emoji-btn:active {
+  transform: scale(0.95);
+}
+
+.reaction-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+
+.emoji-btn:hover .reaction-count {
+  transform: scale(1.1);
 }
 
 /* Empty State */
