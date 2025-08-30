@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
@@ -32,12 +33,13 @@ const Header = () => {
           <p className="quote">"{quote}"</p>
 
           <div className="header-buttons">
-            <a href="#projects" className="btn btn-primary">
+            <Link to="/projects" className="btn btn-primary">
               View Projects
-            </a>
-            <a href="#contact" className="btn btn-outline">
+            </Link>
+
+            <Link to="/contact" className="btn btn-outline">
               Contact Me
-            </a>
+            </Link>
           </div>
         </div>
 

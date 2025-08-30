@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Profile from "./components/Profile";
 import About from "./components/About";
 import Projects from "./components/Projects";
+import FeedbackWall from "./components/FeedbackWall"; // use this for dynamic route
 import Contact from "./components/Contact";
-import FeedbackWall from "./components/FeedbackWall";
 import Footer from "./components/Footer";
 import NotificationModal from "./components/NotificationModal";
 import ScrollProgress from "./components/ScrollProgress";
+
 import "./App.css";
 
 function App() {
@@ -25,26 +28,6 @@ function App() {
     }
   }, [darkMode]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("appear");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const fadeElements = document.querySelectorAll(".fade-in");
-    fadeElements.forEach((el) => observer.observe(el));
-
-    return () => {
-      fadeElements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-
   const handleFormSubmit = (message) => {
     setModalMessage(message);
     setShowModal(true);
@@ -52,29 +35,60 @@ function App() {
   };
 
   return (
-    <div className={`app ${darkMode ? "dark" : ""}`}>
-      <ScrollProgress />
-      <Navbar
-        darkMode={darkMode}
-        toggleDarkMode={() => setDarkMode(!darkMode)}
-      />
-      <Header />
-      <Profile />
-      <About
-        showMore={showMore}
-        toggleShowMore={() => setShowMore(!showMore)}
-      />
-      <Projects />
-      <Contact onSubmit={handleFormSubmit} />
-      <FeedbackWall />
-      <Footer />
-      {showModal && (
-        <NotificationModal
-          message={modalMessage}
-          onClose={() => setShowModal(false)}
+    <Router>
+      <div className={`app ${darkMode ? "dark" : ""}`}>
+        <ScrollProgress />
+        <Navbar
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
         />
-      )}
-    </div>
+
+        <Routes>
+          {/* Home page */}
+          <Route path="/" element={<Header />} />
+
+          {/* About page */}
+          <Route
+            path="/about"
+            element={
+              <>
+                <Profile />
+                <About
+                  showMore={showMore}
+                  toggleShowMore={() => setShowMore(!showMore)}
+                />
+              </>
+            }
+          />
+
+          {/* Projects page */}
+          <Route
+            path="/projects"
+            element={
+              <>
+                <Projects />
+                <FeedbackWall />
+              </>
+            }
+          />
+
+          {/* Contact page */}
+          <Route
+            path="/contact"
+            element={<Contact onSubmit={handleFormSubmit} />}
+          />
+        </Routes>
+
+        <Footer />
+
+        {showModal && (
+          <NotificationModal
+            message={modalMessage}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </div>
+    </Router>
   );
 }
 
