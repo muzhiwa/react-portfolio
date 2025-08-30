@@ -17,7 +17,9 @@ const Contact = ({ onSubmit }) => {
   });
   const [errors, setErrors] = useState({});
   const [isTyping, setIsTyping] = useState(false);
+  const [emailValidationTimeout, setEmailValidationTimeout] = useState(null);
 
+  // Load saved data from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem("contactFormData");
     if (savedData) {
@@ -25,6 +27,7 @@ const Contact = ({ onSubmit }) => {
     }
   }, []);
 
+  // Auto-save form data to localStorage
   useEffect(() => {
     const timer = setTimeout(() => {
       localStorage.setItem("contactFormData", JSON.stringify(formData));
@@ -33,6 +36,30 @@ const Contact = ({ onSubmit }) => {
 
     return () => clearTimeout(timer);
   }, [formData]);
+
+  // Debounced email validation with proper cleanup
+  useEffect(() => {
+    if (emailValidationTimeout) {
+      clearTimeout(emailValidationTimeout);
+    }
+
+    if (formData.email) {
+      setIsTyping(true);
+      const timer = setTimeout(() => {
+        const emailError = validateField("email", formData.email);
+        setErrors((prev) => ({ ...prev, email: emailError }));
+        setIsTyping(false);
+      }, 400);
+
+      setEmailValidationTimeout(timer);
+    }
+
+    return () => {
+      if (emailValidationTimeout) {
+        clearTimeout(emailValidationTimeout);
+      }
+    };
+  }, [formData.email]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,13 +83,10 @@ const Contact = ({ onSubmit }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setIsTyping(true);
 
-    if (name === "email") {
-      const timer = setTimeout(() => {
-        setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
-      }, 400);
-      return () => clearTimeout(timer);
+    // Immediate validation for non-email fields
+    if (name !== "email") {
+      setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
     }
   };
 
@@ -73,6 +97,8 @@ const Contact = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate all fields on submit
     const newErrors = {};
     Object.keys(formData).forEach((key) => {
       newErrors[key] = validateField(key, formData[key]);
@@ -80,10 +106,14 @@ const Contact = ({ onSubmit }) => {
 
     setErrors(newErrors);
 
-    if (!Object.values(newErrors).some((error) => error)) {
+    // Check if there are any errors
+    const hasErrors = Object.values(newErrors).some((error) => error);
+
+    if (!hasErrors) {
       onSubmit(`Thank you, ${formData.name}! Your message was sent.`);
       setFormData({ name: "", email: "", message: "" });
       localStorage.removeItem("contactFormData");
+      setErrors({});
     }
   };
 
@@ -138,7 +168,10 @@ const Contact = ({ onSubmit }) => {
               {errors.email && (
                 <span className="error-message">{errors.email}</span>
               )}
-              {isTyping && formData.email && !errors.email && (
+              {isTyping && formData.email && (
+                <span className="email-typing">Validating email...</span>
+              )}
+              {!isTyping && formData.email && !errors.email && (
                 <span className="email-hint">✓ Valid email format</span>
               )}
             </div>
@@ -162,7 +195,14 @@ const Contact = ({ onSubmit }) => {
               )}
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={
+                Object.values(errors).some((error) => error) ||
+                Object.values(formData).some((value) => !value)
+              }
+            >
               <FontAwesomeIcon icon={faPaperPlane} /> Send Message
             </button>
           </form>
