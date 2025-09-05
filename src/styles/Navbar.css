@@ -8,19 +8,14 @@
   transition: all 0.4s ease;
 }
 
-.app.dark .navbar {
-  background-color: rgba(31, 41, 55, 0.95);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
-
 .navbar-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  height: 80px;
-  padding: 0 20px;
+  padding: 10px 20px;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .logo {
@@ -30,11 +25,19 @@
   background: linear-gradient(90deg, #8b5cf6, #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  justify-self: start;
 }
-
-.nav-links {
+.nav-links-desktop {
   display: flex;
   gap: 30px;
+  justify-content: center;
+  justify-self: center;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 15px;
+  justify-self: end;
 }
 
 .nav-link {
@@ -61,6 +64,10 @@
   width: 100%;
 }
 
+.nav-link.active::after {
+  width: 100%;
+}
+
 .theme-toggle {
   background: linear-gradient(135deg, #8b5cf6, #6366f1);
   border: none;
@@ -84,8 +91,64 @@
   font-size: 1.2rem;
 }
 
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+.nav-links-mobile {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background-color: inherit;
+  padding: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links-mobile.open {
+  display: flex;
+}
+
+.nav-links-mobile .nav-link {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.app.dark .navbar {
+  background-color: rgba(31, 41, 55, 0.95);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.app.dark .nav-links-mobile .nav-link {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @media (max-width: 926px) {
-  .nav-link {
+  .navbar-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .nav-links-desktop {
     display: none;
+  }
+
+  .logo {
+    justify-self: start;
+  }
+
+  .navbar-right {
+    justify-content: center;
+  }
+
+  .navbar-toggler {
+    display: block;
+    justify-self: end;
   }
 }
