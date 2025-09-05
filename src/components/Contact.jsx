@@ -6,7 +6,6 @@ import {
   faUser,
   faEnvelope,
   faMessage,
-  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Contact = ({ onSubmit }) => {
@@ -19,7 +18,6 @@ const Contact = ({ onSubmit }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [emailValidationTimeout, setEmailValidationTimeout] = useState(null);
 
-  // Load saved data from localStorage
   useEffect(() => {
     const savedData = localStorage.getItem("contactFormData");
     if (savedData) {
@@ -27,7 +25,6 @@ const Contact = ({ onSubmit }) => {
     }
   }, []);
 
-  // Auto-save form data to localStorage
   useEffect(() => {
     const timer = setTimeout(() => {
       localStorage.setItem("contactFormData", JSON.stringify(formData));
@@ -37,7 +34,6 @@ const Contact = ({ onSubmit }) => {
     return () => clearTimeout(timer);
   }, [formData]);
 
-  // Debounced email validation with proper cleanup
   useEffect(() => {
     if (emailValidationTimeout) {
       clearTimeout(emailValidationTimeout);
@@ -84,7 +80,6 @@ const Contact = ({ onSubmit }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Immediate validation for non-email fields
     if (name !== "email") {
       setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
     }
@@ -98,7 +93,6 @@ const Contact = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate all fields on submit
     const newErrors = {};
     Object.keys(formData).forEach((key) => {
       newErrors[key] = validateField(key, formData[key]);
@@ -106,7 +100,6 @@ const Contact = ({ onSubmit }) => {
 
     setErrors(newErrors);
 
-    // Check if there are any errors
     const hasErrors = Object.values(newErrors).some((error) => error);
 
     if (!hasErrors) {
@@ -130,100 +123,81 @@ const Contact = ({ onSubmit }) => {
           </div>
         )}
 
-        <div className="contact-content">
-          <form className="contact-form fade-in" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">
-                <FontAwesomeIcon icon={faUser} /> Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.name ? "error" : ""}
-                placeholder="Your name"
-              />
-              {errors.name && (
-                <span className="error-message">{errors.name}</span>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">
-                <FontAwesomeIcon icon={faEnvelope} /> Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.email ? "error" : ""}
-                placeholder="your.email@example.com"
-              />
-              {errors.email && (
-                <span className="error-message">{errors.email}</span>
-              )}
-              {isTyping && formData.email && (
-                <span className="email-typing">Validating email...</span>
-              )}
-              {!isTyping && formData.email && !errors.email && (
-                <span className="email-hint">✓ Valid email format</span>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">
-                <FontAwesomeIcon icon={faMessage} /> Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={errors.message ? "error" : ""}
-                placeholder="Your message here..."
-                rows="5"
-              />
-              {errors.message && (
-                <span className="error-message">{errors.message}</span>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={
-                Object.values(errors).some((error) => error) ||
-                Object.values(formData).some((value) => !value)
-              }
-            >
-              <FontAwesomeIcon icon={faPaperPlane} /> Send Message
-            </button>
-          </form>
-
-          <div className="live-preview fade-in">
-            <h3>
-              <FontAwesomeIcon icon={faPenToSquare} /> Live Preview
-            </h3>
-            <div className="preview-content">
-              <p>
-                <strong>From:</strong> {formData.name || "Anonymous"}
-              </p>
-              <p>
-                <strong>Email:</strong> {formData.email || "Not provided"}
-              </p>
-              <div className="message-preview">
-                {formData.message || "Start typing to see your message here..."}
-              </div>
-            </div>
+        <form className="contact-form fade-in" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">
+              <FontAwesomeIcon icon={faUser} /> Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.name ? "error" : ""}
+              placeholder="Your name"
+            />
+            {errors.name && (
+              <span className="error-message">{errors.name}</span>
+            )}
           </div>
-        </div>
+
+          <div className="form-group">
+            <label htmlFor="email">
+              <FontAwesomeIcon icon={faEnvelope} /> Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.email ? "error" : ""}
+              placeholder="your.email@example.com"
+            />
+            {errors.email && (
+              <span className="error-message">{errors.email}</span>
+            )}
+            {isTyping && formData.email && (
+              <span className="email-typing">Validating email...</span>
+            )}
+            {!isTyping && formData.email && !errors.email && (
+              <span className="email-hint">✓ Valid email format</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="message">
+              <FontAwesomeIcon icon={faMessage} /> Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.message ? "error" : ""}
+              placeholder="Your message here..."
+              rows="5"
+            />
+            {errors.message && (
+              <span className="error-message">{errors.message}</span>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={
+              Object.values(errors).some((error) => error) ||
+              Object.values(formData).some((value) => !value)
+            }
+          >
+            <FontAwesomeIcon icon={faPaperPlane} /> Send Message
+          </button>
+        </form>
       </div>
     </section>
   );

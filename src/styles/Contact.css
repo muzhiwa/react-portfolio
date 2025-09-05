@@ -119,50 +119,6 @@
   box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
 }
 
-.live-preview {
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  height: fit-content;
-}
-
-.dark .live-preview {
-  background: var(--dark-card);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.live-preview h3 {
-  color: var(--primary);
-  margin-bottom: 20px;
-}
-
-.preview-content {
-  background: #f9fafb;
-  padding: 20px;
-  border-radius: 15px;
-  border-left: 4px solid var(--primary);
-}
-
-.dark .preview-content {
-  background: #374151;
-}
-
-.message-preview {
-  margin-top: 15px;
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
-  border: 1px dashed #d1d5db;
-  min-height: 100px;
-  font-style: italic;
-}
-
-.dark .message-preview {
-  background: #4b5563;
-  border-color: #6b7280;
-}
-
 .saved-data-hint {
   background: #fffbeb;
   color: #d97706;
