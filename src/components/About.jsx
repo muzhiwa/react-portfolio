@@ -1,4 +1,3 @@
-
 import React from "react";
 import "../styles/About.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,8 +50,15 @@ const About = ({ showMore, toggleShowMore }) => {
               </p>
             </>
           )}
-
-          <button onClick={toggleShowMore} className="toggle-btn">
+          <a href="/cv.pdf" download="Muzhda_Wafa_CV.pdf" className="cv-link">
+            <button className="cv-btn">Download My CV</button>
+          </a>
+          <button
+            onClick={toggleShowMore}
+            aria-expanded={showMore}
+            aria-controls="moreContent"
+            className="toggle-btn"
+          >
             {showMore ? "Show Less" : "Show More"}
           </button>
         </div>

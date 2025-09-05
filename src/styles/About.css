@@ -48,6 +48,8 @@ h2 {
 
 .hobbies {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .hobbies li {
@@ -76,9 +78,8 @@ h2 {
   background: rgba(31, 41, 55, 0.8);
 }
 
-.toggle-btn {
-  margin-top: 30px;
-  margin-bottom: 80px;
+.toggle-btn,
+.cv-btn {
   padding: 14px 32px;
   border-radius: 50px;
   font-weight: 500;
@@ -89,6 +90,17 @@ h2 {
   transition: all 0.3s;
   font-size: 1rem;
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  display: block;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.toggle-btn {
+  margin-bottom: 80px;
+}
+
+.cv-link {
+  text-decoration: none;
 }
 
 .toggle-btn:hover {
@@ -99,9 +111,14 @@ h2 {
 @media (max-width: 992px) {
   .about-content {
     flex-direction: column;
+    align-items: center;
   }
 
+  .toggle-btn {
+    margin-bottom: 0;
+  }
   .hobbies-section {
-    margin-top: 40px;
+    margin-top: 0;
+    width: 100%;
   }
 }
