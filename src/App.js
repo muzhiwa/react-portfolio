@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import Profile from "./components/Profile";
 import About from "./components/About";
 import Projects from "./components/Projects";
-import FeedbackWall from "./components/FeedbackWall"; // use this for dynamic route
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import NotificationModal from "./components/NotificationModal";
@@ -67,7 +66,6 @@ function App() {
             element={
               <>
                 <Projects />
-                <FeedbackWall />
               </>
             }
           />
