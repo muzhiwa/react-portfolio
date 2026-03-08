@@ -1,4 +1,3 @@
-
 import React from "react";
 import "../styles/ProjectCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +12,12 @@ const ProjectCard = ({ project }) => {
   return (
     <div className="project-card fade-in">
       <div className="project-image">
-        <FontAwesomeIcon icon={faProjectDiagram} className="project-icon" />
+        <img
+          src={project.image}
+          alt={project.name}
+          className="project-image-img"
+        />
+
         {project.featured && (
           <span className="featured-badge">
             <FontAwesomeIcon icon={faStar} /> Featured
